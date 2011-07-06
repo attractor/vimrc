@@ -1,11 +1,10 @@
-![VIM](http://www.vim.org/images/vim_header.gif)
+Usage:
 
-./configure --enable-mzschemeinterp --enable-pythoninterp
---enable-tclinterp  --enable-cscope --enable-fontset
---with-compiledby=aufather --enable-rubyinterp --enable-sniff
---enable-multibyte --enable-gnome-check
+cd ~/.vim
+ruby update_bundles.rb
 
-make
-make install
 
+F7 - Run script
+F6 - Gundo
+Ctr+F - find 
 

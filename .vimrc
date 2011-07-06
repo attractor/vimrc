@@ -9,6 +9,7 @@ au BufRead,BufNewFile *.scss set filetype=scss
 
 " pathogen.vim : Easy manipulation of 'runtimepath', 'path', 'tags', etc 
 call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
 
 " Coffee script
 let coffee_folding = 1
@@ -427,5 +428,24 @@ endfunction
 
 "Bind the BufSel() function to a user-command
 command! -nargs=1 Bs :call BufSel("<args>")
+
+
+
+"Preview output from interpreter in new window
+function! Ruby_eval_vsplit() range
+  let src = tempname()
+  let dst = tempname()
+  execute ": " . a:firstline . "," . a:lastline . "w " . src
+  execute ":silent ! ruby " . src . " > " . dst . " 2>&1 "
+  execute ":pedit! " . dst
+endfunction
+
+vmap <silent> <F7> :call Ruby_eval_vsplit()<CR>
+nmap <silent> <F7> mzggVG<F7>`z
+imap <silent> <F7> <Esc><F7>a
+map <silent> <S-F7> <C-W>l:bw<CR>
+imap <silent> <S-F7> <Esc><S-F7>a
+
+
 
 
