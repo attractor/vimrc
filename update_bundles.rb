@@ -25,7 +25,8 @@ git_bundles = [
   "git://github.com/tsaleh/vim-tcomment.git",
   "git://github.com/vim-ruby/vim-ruby.git",
   #"git://github.com/vim-bundles/fuzzyfinder.git",
-  "git://github.com/clones/vim-fuzzyfinder.git",
+  "git://github.com/slack/vim-fuzzyfinder.git",
+  #"git://github.com/clones/vim-fuzzyfinder.git",
   "git://github.com/jamis/fuzzyfinder_textmate.git",
   "git://github.com/borgand/ir_black.git",
   "git://github.com/mattn/gist-vim.git",
@@ -52,6 +53,8 @@ require 'fileutils'
 require 'open-uri'
 
 bundles_dir = File.join(File.dirname(__FILE__), "bundle")
+FileUtils.rm_rf "bundle" if Dir.exists?("bundle")
+Dir.mkdir "bundle"
 
 FileUtils.cd(bundles_dir)
 
