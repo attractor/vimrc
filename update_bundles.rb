@@ -26,6 +26,7 @@ git_bundles = [
   "git://github.com/vim-ruby/vim-ruby.git",
   #"git://github.com/vim-bundles/fuzzyfinder.git",
   "git://github.com/clones/vim-fuzzyfinder.git",
+  "git://github.com/jamis/fuzzyfinder_textmate.git",
   "git://github.com/borgand/ir_black.git",
   "git://github.com/mattn/gist-vim.git",
   "git://github.com/Shougo/neocomplcache/tree/master",
