@@ -38,7 +38,9 @@ git_bundles = [
   "git://github.com/scrooloose/syntastic.git",
   "git://github.com/mirell/vim-matchit.git",
   "git://github.com/ciaranm/inkpot.git",
-  "git://github.com/hrp/rainbow-parenthesis.git"
+  "git://github.com/hrp/rainbow-parenthesis.git",
+  "git://github.com/vim-scripts/ri-viewer.git",
+  "git://github.com/vim-scripts/rubycomplete.vim.git"
   
 ]
 
