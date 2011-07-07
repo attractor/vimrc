@@ -36,6 +36,8 @@ git_bundles = [
   "git://github.com/vim-scripts/tcommand.git",
   "git://github.com/taq/vim-rspec.git",
   "git://github.com/scrooloose/syntastic.git",
+  "git://github.com/mirell/vim-matchit.git",
+  "git://github.com/ciaranm/inkpot.git"
   
 ]
 
