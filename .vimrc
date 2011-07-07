@@ -69,8 +69,9 @@ set hidden
 
 
 
-
+set modeline
 set encoding=utf-8
+set fileencoding=utf8
 set scrolloff=3
 set autoindent
 set showmode
@@ -80,11 +81,15 @@ set ttyfast
 set ruler
 set relativenumber
 set undofile
+set wildchar=9 " tab as completion character
 
 "To have the completion behave similarly to a shell
 set wildmode=list:longest
 
 
+set linebreak
+set virtualedit=block
+set clipboard+=unnamed " Yanks go on clipboard instead.
 set nowrap        " don't wrap lines
 set tabstop=2     " a tab is four spaces
 set backspace=indent,eol,start
@@ -104,9 +109,15 @@ set incsearch     " show search matches as you type
 set history=1000         " remember more commands and search history
 set undolevels=1000      " use many muchos levels of undo
 set wildignore=*.swp,*.bak,*.pyc,*.class
+
 set title                " change the terminal's title
-set visualbell           " don't beep
+"set visualbell           " don't beep
 set noerrorbells         " don't beep
+autocmd VimEnter * set vb t_vb= 
+
+set showtabline=2 " show always for console version
+set tabline=%!MyTabLine()
+
 autocmd filetype python set expandtab
 set list
 set gdefault
@@ -214,18 +225,32 @@ highlight MatchParen ctermbg=4
 
 "{{{Look and Feel
 
-" Favorite Color Scheme
+
+"
+" appearance options
+"
+set bg=dark
+let g:zenburn_high_Contrast = 1
+let g:liquidcarbon_high_contrast = 1
+let g:molokai_original = 1
+set t_Co=256
+colorscheme molokai
+
 if has("gui_running")
-   colorscheme molokai
-   " Remove Toolbar
+" set default size: 90x35
+   set columns=90
+   set lines=35
+" No menus and no toolbar
+   set guioptions-=m
    set guioptions-=T
-   "Terminus is AWESOME
+   let g:obviousModeInsertHi = "guibg=Black guifg=White"
    set guifont=Droid\ sans\ mono\ 10
 else
-
-    colorscheme wombat256i
-
+   let g:obviousModeInsertHi = "ctermfg=253 ctermbg=16"
+   colorscheme wombat256i
 endif
+
+
 
 "Status line gnarliness
 set laststatus=2
@@ -450,6 +475,97 @@ nmap <silent> <F7> mzggVG<F7>`z
 imap <silent> <F7> <Esc><F7>a
 map <silent> <S-F7> <C-W>l:bw<CR>
 imap <silent> <S-F7> <Esc><S-F7>a
+
+
+" tab navigation like firefox
+nmap <C-S-tab> :tabprevious<cr>
+nmap <C-tab> :tabnext<cr>
+map <C-S-tab> :tabprevious<cr>
+map <C-tab> :tabnext<cr>
+imap <C-S-tab> <ESC>:tabprevious<cr>i
+imap <C-tab> <ESC>:tabnext<cr>i
+nmap <C-t> :tabnew<cr>
+imap <C-t> <ESC>:tabnew<cr>
+" map \tx for the console version as well
+if !has("gui_running")
+   nmap <Leader>tn :tabnext<cr>
+   nmap <Leader>tp :tabprevious<cr>
+   nmap <Leader><F4> :tabclose<cr>
+end
+
+
+" Map Ctrl-E Ctrl-W to toggle linewrap option like in VS
+noremap <C-E><C-W> :set wrap!<CR>
+" Map Ctrl-M Ctrl-L to expand all folds like in VS
+noremap <C-M><C-L> :%foldopen!<CR>
+" Remap omni-complete to avoid having to type so fast
+inoremap <C-Space> <C-X><C-O>
+
+
+" Make sure taglist doesn't change the window size
+let g:Tlist_Inc_Winwidth = 0
+nnoremap <silent> <F8> :TlistToggle<CR>
+
+
+" set custom file types I've configured
+au BufNewFile,BufRead *.ps1 setf ps1
+au BufNewFile,BufRead *.boo setf boo
+au BufNewFile,BufRead *.config setf xml
+au BufNewFile,BufRead *.xaml setf xml
+au BufNewFile,BufRead *.xoml setf xml
+au BufNewFile,BufRead *.blogTemplate setf xhtml
+au BufNewFile,BufRead *.brail setf xhtml
+au BufNewFile,BufRead *.rst setf xml
+au BufNewFile,BufRead *.rsb setf xml
+au BufNewFile,BufRead *.io setf io
+au BufNewFile,BufRead *.notes setf notes
+au BufNewFile,BufRead *.mg setf mg
+
+nmap <leader>R :RainbowParenthesesToggle<CR>
+" these are supposed to be done on syntax files, but
+" they fit pretty much everything I work on.
+au BufNewFile,BufRead *.* call rainbow_parentheses#LoadRound()
+au BufNewFile,BufRead *.* call rainbow_parentheses#LoadSquare()
+au BufNewFile,BufRead *.* call rainbow_parentheses#LoadBraces()
+
+"
+" Configure tabs for the console version
+"
+function! MyTabLine()
+  let s = ''
+  for i in range(tabpagenr('$'))
+" select the highlighting
+    if i + 1 == tabpagenr()
+      let s .= '%#TabLineSel#'
+    else
+      let s .= '%#TabLine#'
+    endif
+
+" set the tab page number (for mouse clicks)
+    let s .= '%' . (i + 1) . 'T'
+
+" the label is made by MyTabLabel()
+    let s .= ' %{MyTabLabel(' . (i + 1) . ')} '
+  endfor
+
+" after the last tab fill with TabLineFill and reset tab page nr
+  let s .= '%#TabLineFill#%T'
+
+" right-align the label to close the current tab page
+  if tabpagenr('$') > 1
+    let s .= '%=%#TabLine#%999Xclose'
+  endif
+
+  return s
+endfunction
+
+function! MyTabLabel(n)
+  let buflist = tabpagebuflist(a:n)
+  let winnr = tabpagewinnr(a:n)
+  return bufname(buflist[winnr - 1])
+endfunction
+
+
 
 
 
