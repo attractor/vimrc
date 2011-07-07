@@ -20,7 +20,7 @@ runtime macros/matchit.vim
 "cursor line
 :set cursorline
 :hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
-":hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+:hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 :nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
 
 
@@ -75,7 +75,6 @@ set fileencoding=utf8
 set scrolloff=3
 set autoindent
 set showmode
-set wildmenu
 set cursorline
 set ttyfast
 set ruler
@@ -83,8 +82,7 @@ set relativenumber
 set undofile
 set wildchar=9 " tab as completion character
 
-"To have the completion behave similarly to a shell
-set wildmode=list:longest
+
 
 
 set linebreak
@@ -189,6 +187,8 @@ autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 "improve autocomplete menu color
 highlight Pmenu ctermbg=238 gui=bold
 
+" For HTML
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 
 " Ctags
 let Tlist_Ctags_Cmd = "/usr/bin/ctags"
@@ -520,10 +520,18 @@ noremap <C-M><C-L> :%foldopen!<CR>
 " Remap omni-complete to avoid having to type so fast
 inoremap <C-Space> <C-X><C-O>
 
+" SuperTab Options
+" let g:SuperTabDefaultCompletionType="<C-x><C-o>"
+let g:SuperTabDefaultCompletionType="context"
+let g:SuperTabContextDefaultCompletionType="<C-X><C-O>"
+
+" Close tags
+imap ,/ </<C-X><C-O>
+
 
 " Make sure taglist doesn't change the window size
 let g:Tlist_Inc_Winwidth = 0
-nnoremap <silent> <F8> :TlistToggle<CR>
+"nnoremap <silent> <F8> :TlistToggle<CR>
 
 
 " set custom file types I've configured
@@ -546,6 +554,8 @@ nmap <leader>R :RainbowParenthesesToggle<CR>
 au BufNewFile,BufRead *.* call rainbow_parentheses#LoadRound()
 au BufNewFile,BufRead *.* call rainbow_parentheses#LoadSquare()
 au BufNewFile,BufRead *.* call rainbow_parentheses#LoadBraces()
+
+
 
 "
 " Configure tabs for the console version
