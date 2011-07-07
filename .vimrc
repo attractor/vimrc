@@ -177,8 +177,24 @@ if version >= 700
    set nospell
 endif
 
+" Ruby staff
 " Real men use gcc
 compiler ruby
+
+nmap <leader>rci :%!ruby-code-indenter<cr> 
+
+autocmd BufEnter *
+           \ if exists("b:rails_root") |
+           \   let g:base_dir = b:rails_root |
+           \ endif |
+
+
+" Ctags
+let Tlist_Ctags_Cmd = "/usr/bin/ctags"
+let Tlist_WinWidth = 50
+map <F12> :TlistToggle<cr>
+map <F11> :!/usr/bin/ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+
 
 " Cool tab completion stuff
 set wildmenu
@@ -232,7 +248,7 @@ highlight MatchParen ctermbg=4
 set bg=dark
 let g:zenburn_high_Contrast = 1
 let g:liquidcarbon_high_contrast = 1
-let g:molokai_original = 1
+let g:molokai_original = 0
 set t_Co=256
 colorscheme molokai
 
@@ -254,7 +270,9 @@ endif
 
 "Status line gnarliness
 set laststatus=2
-set statusline=%F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
+"set statusline=%F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
+
+
 
 " }}}
 
