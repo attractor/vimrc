@@ -14,10 +14,13 @@ call pathogen#helptags()
 " Coffee script
 let coffee_folding = 1
 
+" The % key will switch between opening and closing brackets
+runtime macros/matchit.vim
+
 "cursor line
 :set cursorline
 :hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
-:hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+":hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 :nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
 
 
@@ -78,6 +81,9 @@ set ruler
 set relativenumber
 set undofile
 
+"To have the completion behave similarly to a shell
+set wildmode=list:longest
+
 
 set nowrap        " don't wrap lines
 set tabstop=2     " a tab is four spaces
@@ -86,7 +92,7 @@ set backspace=indent,eol,start
 set autoindent    " always set autoindenting on
 set copyindent    " copy the previous indentation on autoindenting
 set number        " always show line numbers
-set shiftwidth=4  " number of spaces to use for autoindenting
+set shiftwidth=2  " number of spaces to use for autoindenting
 set shiftround    " use multiple of shiftwidth when indenting with '<' and '>'
 set showmatch     " set show matching parenthesis
 set ignorecase    " ignore case when searching
@@ -101,7 +107,6 @@ set wildignore=*.swp,*.bak,*.pyc,*.class
 set title                " change the terminal's title
 set visualbell           " don't beep
 set noerrorbells         " don't beep
-filetype plugin indent on
 autocmd filetype python set expandtab
 set list
 set gdefault
@@ -152,7 +157,7 @@ set expandtab
 set smarttab
 
 " Who wants an 8 character tab?  Not me!
-set shiftwidth=2
+
 set softtabstop=2
 
 " Use english for spellchecking, but don't spellcheck by default
@@ -245,7 +250,7 @@ let themeindex=0
 function! RotateColorTheme()
    let y = -1
    while y == -1
-      let colorstring = "inkpot#ron#blue#elflord#evening#koehler#murphy#pablo#desert#torte#"
+      let colorstring = "inkpot#ron#blue#elflord#evening#koehler#murphy#pablo#desert#torte#molokai#inkpot#"
       let x = match( colorstring, "#", g:themeindex )
       let y = match( colorstring, "#", x + 1 )
       let g:themeindex = x + 1
