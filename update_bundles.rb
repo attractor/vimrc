@@ -38,9 +38,13 @@ git_bundles = [
   "git://github.com/scrooloose/syntastic.git",
   "git://github.com/mirell/vim-matchit.git",
   "git://github.com/ciaranm/inkpot.git",
-  "git://github.com/hrp/rainbow-parenthesis.git",
+  "git://github.com/charlietanksley/Rainbow-Parenthsis-Bundle.git",
   "git://github.com/vim-scripts/ri-viewer.git",
-  "git://github.com/vim-scripts/rubycomplete.vim.git"
+  "git://github.com/vim-scripts/rubycomplete.vim.git",
+  "git://github.com/rstacruz/sparkup.git",
+  "git://github.com/vim-scripts/YankRing.vim.git",
+  "git://github.com/jpalardy/vim-slime.git",
+  "git://github.com/vim-scripts/scratch.vim.git"
   
 ]
 
@@ -58,7 +62,7 @@ require 'fileutils'
 require 'open-uri'
 
 bundles_dir = File.join(File.dirname(__FILE__), "bundle")
-FileUtils.rm_rf "bundle" if Dir.exists?("bundle")
+FileUtils.rm_rf "bundle" if File.directory?("bundle")
 Dir.mkdir "bundle"
 
 FileUtils.cd(bundles_dir)

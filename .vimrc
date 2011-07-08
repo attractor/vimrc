@@ -135,9 +135,10 @@ set colorcolumn=85
 
 au FocusLost * :wa
 
-" ack
+" ack  It’s far, far better than grep.
 nnoremap <leader>a :Ack
 
+"to do something in the new split
 nnoremap <leader>w <C-w>v<C-w>l
 
 " CSS properties sorted
@@ -406,8 +407,7 @@ nnoremap <space> za
 map N Nzz
 map n nzz
 
-" Testing
-"set completeopt=longest,menuone,preview
+set completeopt=longest,menuone,preview
 
 inoremap <expr> <cr> pumvisible() ? "\<c-y>" : "\<c-g>u\<cr>"
 inoremap <expr> <c-n> pumvisible() ? "\<lt>c-n>" : "\<lt>c-n>\<lt>c-r>=pumvisible() ? \"\\<lt>down>\" : \"\"\<lt>cr>"
@@ -551,9 +551,9 @@ au BufNewFile,BufRead *.mg setf mg
 nmap <leader>R :RainbowParenthesesToggle<CR>
 " these are supposed to be done on syntax files, but
 " they fit pretty much everything I work on.
-au BufNewFile,BufRead *.* call rainbow_parentheses#LoadRound()
-au BufNewFile,BufRead *.* call rainbow_parentheses#LoadSquare()
-au BufNewFile,BufRead *.* call rainbow_parentheses#LoadBraces()
+"au BufNewFile,BufRead *.* call rainbow_parentheses#LoadRound()
+"au BufNewFile,BufRead *.* call rainbow_parentheses#LoadSquare()
+"au BufNewFile,BufRead *.* call rainbow_parentheses#LoadBraces()
 
 
 
