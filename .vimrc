@@ -23,12 +23,42 @@ runtime macros/matchit.vim
 :hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 :nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
 
-
+"-------------------------------------------------------------- statusline setup
 "Syntax check
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
+if has('statusline')
+  set statusline=   " clear the statusline, allow for rearranging parts
+  set statusline+=%f                "Path to the file, as typed or relative to current dir
+  set statusline+=%#errormsg#        "change color
+  set statusline+=%{&ff!='unix'?'['.&ff.']':''}   "display a warning if fileformat isnt unix
+  set statusline+=%*                "reset color to normal statusline color
+  set statusline+=%#errormsg#       "change color
+  set statusline+=%{(&fenc!='utf-8'&&&fenc!='')?'['.&fenc.']':''}   "display a warning if file encoding isnt utf-8
+  set statusline+=%*                "reset color to normal statusline color
+  set statusline+=\ %y              "filetype
+  set statusline+=%([%R%M]%)        "read-only (RO), modified (+) and unmodifiable (-) flags between braces
+  set statusline+=%#StatusLineNC#%{&ff=='unix'?'':&ff.'\ format'}%* "shows '!' if file format is not platform default
+  set statusline+=%{'~'[&pm=='']}   "shows a '~' if in patchmode
+  set statusline+=\ %{fugitive#statusline()}  "show Git info, via fugitive.git
+  "set statusline+=\ (%{synIDattr(synID(line('.'),col('.'),0),'name')}) "DEBUG : display the current syntax item name
+  set statusline+=%#error#          "change color
+  set statusline+=%{&paste?'[paste]':''}    "display a warning if &paste is set
+  set statusline+=%*                "reset color to normal statusline color
+  set statusline+=%=                "right-align following items
+  set statusline+=#%n               "buffer number
+  set statusline+=\ %l/%L,          "current line number/total number of lines,
+  set statusline+=%c                "Column number
+  set statusline+=%V                " -{Virtual column number} (Not displayed if equal to 'c')
+  set statusline+=\ %p%%            "percentage of lines through the file%
+  set statusline+=\                 "trailing space
+  if has('title')
+    set titlestring=%t%(\ [%R%M]%)
+  endif
+endif
+"-----------------------------------------------------------end statusline setup
 
 " Remove any trailing whitespace that is in the file
 autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
@@ -593,6 +623,14 @@ function! MyTabLabel(n)
   let winnr = tabpagewinnr(a:n)
   return bufname(buflist[winnr - 1])
 endfunction
+
+
+"Rainbow
+if exists("g:btm_rainbow_color") && g:btm_rainbow_color
+  call rainbow_parenthsis#LoadSquare ()
+  call rainbow_parenthsis#LoadRound ()
+  call rainbow_parenthsis#Activate ()
+endif
 
 
 
