@@ -23,6 +23,11 @@ runtime macros/matchit.vim
 :hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 :nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
 
+
+"" Highlights
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+match OverLength /\%79v.*/
+
 "-------------------------------------------------------------- statusline setup
 "Syntax check
 set statusline+=%#warningmsg#
@@ -146,6 +151,10 @@ autocmd VimEnter * set vb t_vb=
 set showtabline=2 " show always for console version
 set tabline=%!MyTabLine()
 
+" Make tab in v mode work like I think it should (keep highlighting):
+vmap <tab> >gv
+vmap <s-tab> <gv
+
 autocmd filetype python set expandtab
 set list
 set gdefault
@@ -164,6 +173,10 @@ set formatoptions=qrn1
 set colorcolumn=85
 
 au FocusLost * :wa
+
+" copy paste
+vmap <C-c> y:call system("xclip -i -selection clipboard", getreg("\""))<CR>:call system("xclip -i", getreg("\""))<CR>
+nmap <C-v> :call setreg("\"",system("xclip -o -selection clipboard"))<CR>p
 
 " ack  It’s far, far better than grep.
 nnoremap <leader>a :Ack
@@ -234,9 +247,16 @@ set wildmode=list:longest,full
 
 " Enable mouse support in console
 set mouse=a
+behave xterm
+set selectmode=mouse
 
 " Got backspace?
 set backspace=2
+
+"Directories
+set backupdir=~/.vimbackup          " Set backup location.
+set backup                          " Enable backups.
+set directory=~/.vimbackup/swap     " Set swap directory.
 
 " Line Numbers PWN!
 set number
